@@ -73,7 +73,7 @@ public class Calculator {
 				{
 					firstNum = Double.parseDouble(expr.substring(0, plusIndex));
 					secondNum = Double.parseDouble(expr.substring(plusIndex+1));
-					// send to add function
+					add(secondNum, firstNum);
 				}
 				else if (plusIndex == -1)
 				{
