@@ -67,7 +67,7 @@ public class Calculator {
 				{
 					firstNum = total;
 					secondNum = Double.parseDouble(expr.substring(1));
-					// send to subtract function
+					subtract(firstNum, secondNum);
 				}
 				else if(minusIndex == -1)
 				{
@@ -79,7 +79,7 @@ public class Calculator {
 				{
 					firstNum = Double.parseDouble(expr.substring(0, minusIndex));
 					secondNum = Double.parseDouble(expr.substring(minusIndex+1));
-					// send to subtract function
+					subtract(firstNum, secondNum);
 				}
 				else
 				{
@@ -112,4 +112,12 @@ public class Calculator {
 		total = (first + second);
 		System.out.println(total);
 	}
+
+	private void subtract(double first, double second)
+	{
+		total = (first - second);
+		System.out.println(total);
+	}
+	
+
 }
