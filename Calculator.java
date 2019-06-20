@@ -11,10 +11,6 @@ public class Calculator {
 	private double total; // total of all expressions (sets up functionality for multiple operator inputs)
 	public static void main(String[] args)
 	{
-		if(args.length != 0) // check for spaces
-		{
-			printUsage();
-		}
 		new Calculator(); // create this object
 	}
 	
