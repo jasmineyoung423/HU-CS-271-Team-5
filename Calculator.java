@@ -6,7 +6,7 @@ import java.util.Scanner;
  * @author Jasmine Young */
 public class Calculator {
 	
-	private static double firstNum; // number on left of operator
+	private double firstNum; // number on left of operator
 	private double secondNum; // number on right of operator
 	private double total; // total of all expressions (sets up functionality for multiple operator inputs)
 	public static void main(String[] args)
@@ -47,40 +47,68 @@ public class Calculator {
 				break;
 			}
 		}
+		scan.close();
 	}
 	
 	private void parseExpression(String expr)
 	{
-		int plusIndex = expr.indexOf('+'); // sets up functionality for multiple operator inputs
-		int minusIndex = expr.indexOf('-'); // sets up functionality for multiple operator inputs
-		if(minusIndex == -1)
-		{
-			firstNum = Double.parseDouble(expr.substring(0, plusIndex));
-			secondNum = Double.parseDouble(expr.substring(plusIndex+1));
-			System.out.println(firstNum + secondNum);
-			// total += addition function
+		try {
+			if(expr.contains(" ") || (!expr.contains("+") && !expr.contains("-")))
+			{
+				printUsage();
+			}
+			else
+			{
+				int plusIndex = expr.indexOf('+'); // sets up functionality for multiple operator inputs
+				int minusIndex = expr.indexOf('-'); // sets up functionality for multiple operator inputs
+				if(plusIndex == 0)
+				{
+					firstNum = total;
+					secondNum = Double.parseDouble(expr.substring(1));
+					// send to add function
+				}
+				else if (minusIndex == 0)
+				{
+					firstNum = total;
+					secondNum = Double.parseDouble(expr.substring(1));
+					// send to subtract function
+				}
+				else if(minusIndex == -1)
+				{
+					firstNum = Double.parseDouble(expr.substring(0, plusIndex));
+					secondNum = Double.parseDouble(expr.substring(plusIndex+1));
+					// send to add function
+				}
+				else if (plusIndex == -1)
+				{
+					firstNum = Double.parseDouble(expr.substring(0, minusIndex));
+					secondNum = Double.parseDouble(expr.substring(minusIndex+1));
+					// send to subtract function
+				}
+				else
+				{
+					System.out.println("Please input only one operator.");
+				}
+				expr = "";
+				System.out.println("Enter a command. Enter menu for list of commands:");
+			}
 		}
-		else if (plusIndex == -1)
+		catch(NumberFormatException nfe)
 		{
-			firstNum = Double.parseDouble(expr.substring(0, minusIndex));
-			secondNum = Double.parseDouble(expr.substring(minusIndex+1));
-			System.out.println(firstNum + secondNum);
-			//total += subtraction function
+			System.out.println("Please enter digits, operators, and supported operations only.");
+			printUsage();
 		}
-		//System.out.println(total);
-		expr = "";
-		System.out.println("Enter a command: enter menu for list of commands.");
 	}
 	
 	
 	/**Prints the proper usage of Calculator*/
 	private static void printUsage()
 	{
-		System.out.println("Please enter a full expression with one operator and no spaces.\n" + 
+		System.out.println("Please enter a full expression with one operator and no spaces. \n" + 
 							"Current Operations Supported: \n" +
 							"exit: exit program \n" +
 							"clear: clear memory \n" +
-							"Enter a command. enter menu for list of commands:"); // update with functionality
+							"Enter a command. Enter menu for list of commands:"); // update with functionality
 	}
 
 }
