@@ -61,7 +61,7 @@ public class Calculator {
 				{
 					firstNum = total;
 					secondNum = Double.parseDouble(expr.substring(1));
-					// send to add function
+					add(firstNum, secondNum);
 				}
 				else if (minusIndex == 0)
 				{
@@ -107,4 +107,9 @@ public class Calculator {
 							"Enter a command. Enter menu for list of commands:"); // update with functionality
 	}
 
+	private void add(double first, double second)
+	{
+		total = (first + second);
+		System.out.println(total);
+	}
 }
