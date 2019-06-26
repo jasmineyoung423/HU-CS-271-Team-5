@@ -119,5 +119,19 @@ public class Calculator {
 		System.out.println(total);
 	}
 	
+	private void factorial(double num)
+	{
+		double numCount = num-1;
+		double tempTotal = num;
+		
+		while(numCount != 0)
+		{
+			tempTotal = (tempTotal * numCount);
+		
+			numCount--;
+		}
+		total = tempTotal;
+		System.out.println(total);
+	}
 
 }
