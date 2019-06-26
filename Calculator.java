@@ -154,7 +154,7 @@ public class Calculator {
 	private void divide(double first, double second)
 	{
 		total = (first / second);
-		System.out.println(total);
+		System.out.println(total); 
 	}
 
 	private void factorial(double num)
