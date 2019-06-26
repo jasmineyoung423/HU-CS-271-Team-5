@@ -49,7 +49,7 @@ public class Calculator {
 	private void parseExpression(String expr)
 	{
 		try {
-			if(expr.contains(" ") || (!expr.contains("+") && !expr.contains("-")))
+			if(expr.contains(" "))
 			{
 				printUsage();
 			}
@@ -57,6 +57,8 @@ public class Calculator {
 			{
 				int plusIndex = expr.indexOf('+'); // sets up functionality for multiple operator inputs
 				int minusIndex = expr.indexOf('-'); // sets up functionality for multiple operator inputs
+				int multiplyIndex = expr.indexOf('*');
+				int divideIndex = expr.indexOf('/');
 				if(plusIndex == 0)
 				{
 					firstNum = total;
@@ -69,17 +71,41 @@ public class Calculator {
 					secondNum = Double.parseDouble(expr.substring(1));
 					subtract(firstNum, secondNum);
 				}
-				else if(minusIndex == -1)
+				else if (multiplyIndex == 0)
+				{
+					firstNum = total;
+					secondNum = Double.parseDouble(expr.substring(1));
+					multiply(firstNum, secondNum);
+				}
+				else if (divideIndex == 0)
+				{
+					firstNum = total;
+					secondNum = Double.parseDouble(expr.substring(1));
+					divide(firstNum, secondNum);
+				}
+				else if(minusIndex == -1 && multiplyIndex == -1 && divideIndex == -1)
 				{
 					firstNum = Double.parseDouble(expr.substring(0, plusIndex));
 					secondNum = Double.parseDouble(expr.substring(plusIndex+1));
 					add(firstNum, secondNum);
 				}
-				else if (plusIndex == -1)
+				else if (plusIndex == -1 && multiplyIndex == -1 && divideIndex == -1)
 				{
 					firstNum = Double.parseDouble(expr.substring(0, minusIndex));
 					secondNum = Double.parseDouble(expr.substring(minusIndex+1));
 					subtract(firstNum, secondNum);
+				}
+				else if (plusIndex == -1 && minusIndex == -1 && divideIndex == -1)
+				{
+					firstNum = Double.parseDouble(expr.substring(0, multiplyIndex));
+					secondNum = Double.parseDouble(expr.substring(multiplyIndex+1));
+					multiply(firstNum, secondNum);
+				}
+				else if (plusIndex == -1 && minusIndex == -1 && multiplyIndex == -1)
+				{
+					firstNum = Double.parseDouble(expr.substring(0, divideIndex));
+					secondNum = Double.parseDouble(expr.substring(divideIndex+1));
+					divide(firstNum, secondNum);
 				}
 				else
 				{
@@ -119,6 +145,18 @@ public class Calculator {
 		System.out.println(total);
 	}
 	
+	private void multiply(double first, double second)
+	{
+		total = (first * second);
+		System.out.println(total);
+	}
+	
+	private void divide(double first, double second)
+	{
+		total = (first / second);
+		System.out.println(total);
+	}
+
 	private void factorial(double num)
 	{
 		double numCount = num-1;
