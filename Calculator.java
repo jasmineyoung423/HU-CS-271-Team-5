@@ -6,9 +6,7 @@ import java.util.Scanner;
  * @author Jasmine Young */
 public class Calculator {
 	
-	private double firstNum; // number on left of operator
-	private double secondNum; // number on right of operator
-	private double total; // total of all expressions (sets up functionality for multiple operator inputs)
+	private double total; // total of the  expressions
 	public static void main(String[] args)
 	{
 		new Calculator(); // create this object
@@ -27,8 +25,6 @@ public class Calculator {
 			switch(expr)
 			{
 			case "clear":
-				firstNum = 0;
-				secondNum = 0;
 				total = 0;
 				break;
 			case "exit":
@@ -49,49 +45,145 @@ public class Calculator {
 	private void parseExpression(String expr)
 	{
 		try {
-			if(expr.contains(" ") || (!expr.contains("+") && !expr.contains("-")))
+			
+			if(expr.contains(" ")) // to make parsing easier
 			{
 				printUsage();
 			}
 			else
 			{
-				int plusIndex = expr.indexOf('+'); // sets up functionality for multiple operator inputs
-				int minusIndex = expr.indexOf('-'); // sets up functionality for multiple operator inputs
-				if(plusIndex == 0)
+				boolean hasPlus = expr.contains("+"); // for single operator verification
+				boolean hasMinus = expr.contains("-"); // for single operator verification
+				boolean hasMult = expr.contains("*"); // for single operator verification
+				boolean hasDiv = expr.contains("/"); // for single operator verification
+				boolean hasExpo = expr.contains("^"); // for single operator verification
+				boolean hasFact = expr.contains("!"); // for single operator verification
+				int operatorCount = 0; // for single operator verification
+				
+				// single operator verification
+				if(hasPlus)
 				{
-					firstNum = total;
-					secondNum = Double.parseDouble(expr.substring(1));
-					add(firstNum, secondNum);
+					operatorCount++;
 				}
-				else if (minusIndex == 0)
+				if(hasMinus)
 				{
-					firstNum = total;
-					secondNum = Double.parseDouble(expr.substring(1));
-					subtract(firstNum, secondNum);
+					operatorCount++;
 				}
-				else if(minusIndex == -1)
+				if(hasMult)
 				{
-					firstNum = Double.parseDouble(expr.substring(0, plusIndex));
-					secondNum = Double.parseDouble(expr.substring(plusIndex+1));
-					add(firstNum, secondNum);
+					operatorCount++;
 				}
-				else if (plusIndex == -1)
+				if(hasDiv)
 				{
-					firstNum = Double.parseDouble(expr.substring(0, minusIndex));
-					secondNum = Double.parseDouble(expr.substring(minusIndex+1));
-					subtract(firstNum, secondNum);
+					operatorCount++;
 				}
+				if(hasExpo)
+				{
+					operatorCount++;
+				}
+				if(hasFact)
+				{
+					operatorCount++;
+				}
+				
+				if(operatorCount == 1)
+				{
+					double firstNum; // number on left of operator
+					double secondNum; // number on right of operator
+					int plusIndex = expr.indexOf('+'); // finds where the + sign is (if at all)
+					int minusIndex = expr.indexOf('-'); // finds where the - sign is (if at all)
+					int multIndex = expr.indexOf('*'); // finds where the * sign is (if at all)
+					int divIndex = expr.indexOf('/'); // finds where the / sign is (if at all)
+					int expoIndex = expr.indexOf('^'); // finds where the ^ sign is (if at all)
+					int factIndex = expr.indexOf('!'); // finds where the ! sign is (if at all)
+					if(plusIndex == 0)
+					{
+						firstNum = total;
+						secondNum = Double.parseDouble(expr.substring(1));
+						add(firstNum, secondNum);
+					}
+					else if (minusIndex == 0)
+					{
+						firstNum = total;
+						secondNum = Double.parseDouble(expr.substring(1));
+						subtract(firstNum, secondNum);
+					}
+					else if(multIndex == 0)
+					{
+						firstNum = total;
+						secondNum = Double.parseDouble(expr.substring(1));
+						// send to multiplication function
+					}
+					else if(divIndex == 0)
+					{
+						firstNum = total;
+						secondNum = Double.parseDouble(expr.substring(1));
+						// send to division function
+					}
+					else if(expoIndex == 0)
+					{
+						firstNum = total;
+						secondNum = Double.parseDouble(expr.substring(1));
+						// send to exponent function
+					}
+					else if(factIndex == 0)
+					{
+						firstNum = total;
+						// send to factorial function
+					}
+					else if(plusIndex > 0)
+					{
+						firstNum = Double.parseDouble(expr.substring(0, plusIndex));
+						secondNum = Double.parseDouble(expr.substring(plusIndex+1));
+						add(firstNum, secondNum);
+					}
+					else if (minusIndex > 0)
+					{
+						firstNum = Double.parseDouble(expr.substring(0, minusIndex));
+						secondNum = Double.parseDouble(expr.substring(minusIndex+1));
+						subtract(firstNum, secondNum);
+					}
+					else if (multIndex > 0)
+					{
+						firstNum = Double.parseDouble(expr.substring(0, multIndex));
+						secondNum = Double.parseDouble(expr.substring(multIndex+1));
+						// send to multiplication function
+					}
+					else if (divIndex > 0)
+					{
+						firstNum = Double.parseDouble(expr.substring(0, divIndex));
+						secondNum = Double.parseDouble(expr.substring(divIndex+1));
+						// send to division function
+					}
+					else if (expoIndex > 0)
+					{
+						firstNum = Double.parseDouble(expr.substring(0, expoIndex));
+						secondNum = Double.parseDouble(expr.substring(expoIndex+1));
+						// send to exponent function
+					}
+					else if (factIndex > 0)
+					{
+						firstNum = Double.parseDouble(expr.substring(0, factIndex));
+						secondNum = Double.parseDouble(expr.substring(factIndex+1));
+						// send to factorial function
+					}
+					else
+					{
+						System.out.println("Something went wrong. Did not find any operators");
+					}
+					expr = "";
+					System.out.println("Enter a command. Enter menu for list of commands:");
+				} // operatorCount if 
 				else
 				{
-					System.out.println("Please input only one operator.");
+					System.out.println( "Please enter one and only one operator.");
+					printUsage();
 				}
-				expr = "";
-				System.out.println("Enter a command. Enter menu for list of commands:");
-			}
-		}
+			} // contains space else 
+		} // try
 		catch(NumberFormatException nfe)
 		{
-			System.out.println("Please enter digits, operators, and supported operations only.");
+			System.out.println( expr + " is not a valid expression. Please enter digits, operators, and supported operations only.");
 			printUsage();
 		}
 	}
@@ -104,7 +196,13 @@ public class Calculator {
 							"Current Operations Supported: \n" +
 							"exit: exit program \n" +
 							"clear: clear memory \n" +
-							"Enter a command. Enter menu for list of commands:"); // update with functionality
+							"addition: [digit]+[digit]  OR +[digit] to use previous answer as first digit \n" +
+							"subtraction: [digit]-[digit] OR -[digit] \n" +
+							"multiplication: [digit]*[digit] OR *[digit] \n" +
+							"division: [digit]/[digit] OR /[digit] \n" +
+							"exponential: [digit]^[digit] OR ^[digit] \n" +
+							"factorial: [digit]! OR ! \n" +
+							"Enter a command:"); // update with functionality
 	}
 
 	private void add(double first, double second)
@@ -118,6 +216,4 @@ public class Calculator {
 		total = (first - second);
 		System.out.println(total);
 	}
-	
-
 }
