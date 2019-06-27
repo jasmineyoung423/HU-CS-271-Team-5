@@ -89,14 +89,9 @@ public class Calculator {
 				{
 					double firstNum; // number on left of operator
 					double secondNum; // number on right of operator
-					int plusIndex = expr.indexOf('+'); // finds where the + sign is (if at all)
-					int minusIndex = expr.indexOf('-'); // finds where the - sign is (if at all)
-					int multIndex = expr.indexOf('*'); // finds where the * sign is (if at all)
-					int divIndex = expr.indexOf('/'); // finds where the / sign is (if at all)
-					int expoIndex = expr.indexOf('^'); // finds where the ^ sign is (if at all)
-					int factIndex = expr.indexOf('!'); // finds where the ! sign is (if at all)
 					if(hasPlus)
 					{
+						int plusIndex = expr.indexOf('+');
 						if(plusIndex == 0)
 						{
 							firstNum = total;
@@ -111,6 +106,7 @@ public class Calculator {
 					}
 					else if (hasMinus)
 					{
+						int minusIndex = expr.indexOf('-');
 						if(minusIndex == 0)
 						{
 							firstNum = total;
@@ -125,6 +121,7 @@ public class Calculator {
 					}
 					else if(hasMult)
 					{
+						int multIndex = expr.indexOf('*');
 						if(multIndex == 0)
 						{
 							firstNum = total;
@@ -139,6 +136,7 @@ public class Calculator {
 					}
 					else if(hasDiv)
 					{
+						int divIndex = expr.indexOf('/');
 						if(divIndex == 0)
 						{
 							firstNum = total;
@@ -153,6 +151,7 @@ public class Calculator {
 					}
 					else if(hasExpo)
 					{
+						int expoIndex = expr.indexOf('^');
 						if(expoIndex == 0)
 						{
 							firstNum = total;
@@ -167,6 +166,7 @@ public class Calculator {
 					}
 					else if(hasFact)
 					{
+						int factIndex = expr.indexOf('!');
 						if(factIndex == 0)
 						{
 							firstNum = total;
