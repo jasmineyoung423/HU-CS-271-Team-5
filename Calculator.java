@@ -45,11 +45,10 @@ public class Calculator {
 	private void parseExpression(String expr)
 	{
 		try {
-			
-			if(expr.contains(" ")) // to make parsing easier
+			if(expr.contains(" ")) //to make parsing easier
 			{
-				printUsage();
-			}
+
+			} 
 			else
 			{
 				boolean hasPlus = expr.contains("+"); // for single operator verification
@@ -96,75 +95,86 @@ public class Calculator {
 					int divIndex = expr.indexOf('/'); // finds where the / sign is (if at all)
 					int expoIndex = expr.indexOf('^'); // finds where the ^ sign is (if at all)
 					int factIndex = expr.indexOf('!'); // finds where the ! sign is (if at all)
-					if(plusIndex == 0)
+					if(hasPlus)
 					{
-						firstNum = total;
-						secondNum = Double.parseDouble(expr.substring(1));
+						if(plusIndex == 0)
+						{
+							firstNum = total;
+							secondNum = Double.parseDouble(expr.substring(1));
+						}
+						else
+						{
+							firstNum = Double.parseDouble(expr.substring(0, plusIndex));
+							secondNum = Double.parseDouble(expr.substring(plusIndex+1));
+						}
 						add(firstNum, secondNum);
 					}
-					else if (minusIndex == 0)
+					else if (hasMinus)
 					{
+						if(minusIndex == 0)
+						{
 						firstNum = total;
 						secondNum = Double.parseDouble(expr.substring(1));
+						}
+						else
+						{
+							firstNum = Double.parseDouble(expr.substring(0, minusIndex));
+							secondNum = Double.parseDouble(expr.substring(minusIndex+1));
+						}
 						subtract(firstNum, secondNum);
 					}
-					else if(multIndex == 0)
+					else if(hasMult)
 					{
+						if(multIndex == 0)
+						{
 						firstNum = total;
 						secondNum = Double.parseDouble(expr.substring(1));
+						}
+						else
+						{
+							firstNum = Double.parseDouble(expr.substring(0, multIndex));
+							secondNum = Double.parseDouble(expr.substring(multIndex+1));
+						}
 						// send to multiplication function
 					}
-					else if(divIndex == 0)
+					else if(hasDiv)
 					{
+						if(divIndex == 0)
+						{
 						firstNum = total;
 						secondNum = Double.parseDouble(expr.substring(1));
+						}
+						else
+						{
+							firstNum = Double.parseDouble(expr.substring(0, divIndex));
+							secondNum = Double.parseDouble(expr.substring(divIndex+1));
+						}
 						// send to division function
 					}
-					else if(expoIndex == 0)
+					else if(hasExpo)
 					{
+						if(expoIndex == 0)
+						{
 						firstNum = total;
 						secondNum = Double.parseDouble(expr.substring(1));
+						}
+						else
+						{
+							firstNum = Double.parseDouble(expr.substring(0, expoIndex));
+							secondNum = Double.parseDouble(expr.substring(expoIndex+1));
+						}
 						// send to exponent function
 					}
-					else if(factIndex == 0)
+					else if(hasFact)
 					{
-						firstNum = total;
-						// send to factorial function
-					}
-					else if(plusIndex > 0)
-					{
-						firstNum = Double.parseDouble(expr.substring(0, plusIndex));
-						secondNum = Double.parseDouble(expr.substring(plusIndex+1));
-						add(firstNum, secondNum);
-					}
-					else if (minusIndex > 0)
-					{
-						firstNum = Double.parseDouble(expr.substring(0, minusIndex));
-						secondNum = Double.parseDouble(expr.substring(minusIndex+1));
-						subtract(firstNum, secondNum);
-					}
-					else if (multIndex > 0)
-					{
-						firstNum = Double.parseDouble(expr.substring(0, multIndex));
-						secondNum = Double.parseDouble(expr.substring(multIndex+1));
-						// send to multiplication function
-					}
-					else if (divIndex > 0)
-					{
-						firstNum = Double.parseDouble(expr.substring(0, divIndex));
-						secondNum = Double.parseDouble(expr.substring(divIndex+1));
-						// send to division function
-					}
-					else if (expoIndex > 0)
-					{
-						firstNum = Double.parseDouble(expr.substring(0, expoIndex));
-						secondNum = Double.parseDouble(expr.substring(expoIndex+1));
-						// send to exponent function
-					}
-					else if (factIndex > 0)
-					{
-						firstNum = Double.parseDouble(expr.substring(0, factIndex));
-						secondNum = Double.parseDouble(expr.substring(factIndex+1));
+						if(factIndex == 0)
+						{
+							firstNum = total;
+						}
+						else
+						{
+							firstNum = Double.parseDouble(expr.substring(0, factIndex));
+						}
 						// send to factorial function
 					}
 					else
@@ -214,6 +224,33 @@ public class Calculator {
 	private void subtract(double first, double second)
 	{
 		total = (first - second);
+		System.out.println(total);
+	}
+
+	private void multiply(double first, double second)
+	{
+		total = (first * second);
+		System.out.println(total);
+	}
+	
+	private void divide(double first, double second)
+	{
+		total = (first / second);
+		System.out.println(total); 
+	}
+
+	private void factorial(double num)
+	{
+		double numCount = num-1;
+		double tempTotal = num;
+		
+		while(numCount != 0)
+		{
+			tempTotal = (tempTotal * numCount);
+		
+			numCount--;
+		}
+		total = tempTotal;
 		System.out.println(total);
 	}
 }
