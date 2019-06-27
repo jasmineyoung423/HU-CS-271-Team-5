@@ -47,7 +47,7 @@ public class Calculator {
 		try {
 			if(expr.contains(" ")) //to make parsing easier
 			{
-
+				printUsage();
 			} 
 			else
 			{
@@ -113,8 +113,8 @@ public class Calculator {
 					{
 						if(minusIndex == 0)
 						{
-						firstNum = total;
-						secondNum = Double.parseDouble(expr.substring(1));
+							firstNum = total;
+							secondNum = Double.parseDouble(expr.substring(1));
 						}
 						else
 						{
@@ -127,43 +127,43 @@ public class Calculator {
 					{
 						if(multIndex == 0)
 						{
-						firstNum = total;
-						secondNum = Double.parseDouble(expr.substring(1));
+							firstNum = total;
+							secondNum = Double.parseDouble(expr.substring(1));
 						}
 						else
 						{
 							firstNum = Double.parseDouble(expr.substring(0, multIndex));
 							secondNum = Double.parseDouble(expr.substring(multIndex+1));
 						}
-						// send to multiplication function
+						multiply(firstNum, secondNum);
 					}
 					else if(hasDiv)
 					{
 						if(divIndex == 0)
 						{
-						firstNum = total;
-						secondNum = Double.parseDouble(expr.substring(1));
+							firstNum = total;
+							secondNum = Double.parseDouble(expr.substring(1));
 						}
 						else
 						{
 							firstNum = Double.parseDouble(expr.substring(0, divIndex));
 							secondNum = Double.parseDouble(expr.substring(divIndex+1));
 						}
-						// send to division function
+						divide(firstNum, secondNum);
 					}
 					else if(hasExpo)
 					{
 						if(expoIndex == 0)
 						{
-						firstNum = total;
-						secondNum = Double.parseDouble(expr.substring(1));
+							firstNum = total;
+							secondNum = Double.parseDouble(expr.substring(1));
 						}
 						else
 						{
 							firstNum = Double.parseDouble(expr.substring(0, expoIndex));
 							secondNum = Double.parseDouble(expr.substring(expoIndex+1));
 						}
-						// send to exponent function
+						exponent(firstNum, secondNum);
 					}
 					else if(hasFact)
 					{
@@ -175,7 +175,7 @@ public class Calculator {
 						{
 							firstNum = Double.parseDouble(expr.substring(0, factIndex));
 						}
-						// send to factorial function
+						factorial(firstNum);
 					}
 					else
 					{
@@ -251,6 +251,12 @@ public class Calculator {
 			numCount--;
 		}
 		total = tempTotal;
+		System.out.println(total);
+	}
+	
+	private void exponent(double first, double second)
+	{
+		total = Math.pow(first, second);
 		System.out.println(total);
 	}
 }
