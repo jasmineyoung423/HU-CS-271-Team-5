@@ -97,7 +97,14 @@ public class Calculator {
 						if(plusIndex == 0)
 						{
 							firstNum = total;
-							secondNum = Double.parseDouble(expr.substring(1));
+							if(hasPI)
+							{
+								secondNum = pi;
+							}
+							else
+							{
+								secondNum = Double.parseDouble(expr.substring(1));
+							}
 						}
 						else
 						{
@@ -128,7 +135,14 @@ public class Calculator {
 						if(minusIndex == 0)
 						{
 							firstNum = total;
-							secondNum = Double.parseDouble(expr.substring(1));
+							if(hasPI)
+							{
+								secondNum = pi;
+							}
+							else
+							{
+								secondNum = Double.parseDouble(expr.substring(1));
+							}
 						}
 						else
 						{
@@ -159,7 +173,14 @@ public class Calculator {
 						if(multIndex == 0)
 						{
 							firstNum = total;
-							secondNum = Double.parseDouble(expr.substring(1));
+							if(hasPI)
+							{
+								secondNum = pi;
+							}
+							else
+							{
+								secondNum = Double.parseDouble(expr.substring(1));
+							}
 						}
 						else
 						{
@@ -190,7 +211,14 @@ public class Calculator {
 						if(divIndex == 0)
 						{
 							firstNum = total;
-							secondNum = Double.parseDouble(expr.substring(1));
+							if(hasPI)
+							{
+								secondNum = pi;
+							}
+							else
+							{
+								secondNum = Double.parseDouble(expr.substring(1));
+							}
 						}
 						else
 						{
@@ -221,7 +249,14 @@ public class Calculator {
 						if(expoIndex == 0)
 						{
 							firstNum = total;
-							secondNum = Double.parseDouble(expr.substring(1));
+							if(hasPI)
+							{
+								secondNum = pi;
+							}
+							else
+							{
+								secondNum = Double.parseDouble(expr.substring(1));
+							}
 						}
 						else
 						{
@@ -294,7 +329,7 @@ public class Calculator {
 							"division: [digit]/[digit] OR /[digit] \n" +
 							"exponential: [digit]^[digit] OR ^[digit] \n" +
 							"factorial: [digit]! OR ! \n" +
-							"PI: Input PI in place of [digit] in one of the above operations (does not work with factorial)" +
+							"PI: Input PI in place of [digit] in one of the above operations (does not work with factorial)\n" +
 							"Enter a command:"); // update with functionality
 	}
 
