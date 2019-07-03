@@ -241,17 +241,31 @@ public class Calculator {
 
 	private void factorial(double num)
 	{
-		double numCount = num-1;
-		double tempTotal = num;
-		
-		while(numCount != 0)
+		try
 		{
-			tempTotal = (tempTotal * numCount);
+			if(num % 1 != 0 || num <= 0)
+			{
+				throw new Exception();
+			}
+			else
+			{
+				double tempTotal = num;
+				double numCount = num-1;
+				
+				while(numCount != 0)
+				{
+				tempTotal = (tempTotal * numCount);
 		
-			numCount--;
+				numCount--;
+				}
+			total = tempTotal;
+			System.out.println(total);
+			}
 		}
-		total = tempTotal;
-		System.out.println(total);
+		catch(Exception e)
+		{
+			System.out.println("Factorial requires a positive whole number. Ex: 5!");
+		}
 	}
 	
 	private void exponent(double first, double second)
