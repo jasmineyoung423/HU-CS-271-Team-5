@@ -171,5 +171,72 @@ public class Calculator {
 		total = tempTotal;
 		System.out.println(total);
 	}
+	
+
+	/*
+	 * Methods for adding, subtracting and multiplying matrices
+	 */
+	private void matrixAdd(double first[][], double second[][], 
+			int firstRow, int firstCol, int secondRow, int secondCol) 
+	{
+		if (firstRow == secondRow && firstCol == secondCol) //must be true to add matrices
+		{
+			int row = firstRow;
+			int col = secondCol;
+			double addResult[][]=new double[row][col];
+
+			for(int i = 0; i < row ;i++){
+				for(int j = 0; j <col; j++){
+					addResult[i][j] = first[i][j]+second[i][j];
+					System.out.print(addResult[i][j]+" ");
+				}
+			}
+		}
+		else {
+			System.out.println("These matrices cannot be added because they are not the same size.");
+		}
+	}
+	private void matrixSubtract(double first[][], double second[][], 
+			int firstRow, int firstCol, int secondRow, int secondCol) 
+	{
+		if (firstRow == secondRow && firstCol == secondCol) //must be true to subtract matrices
+		{
+			int row = firstRow;
+			int col = secondCol;
+			double subtractResult[][]=new double[row][col];
+
+			for(int i = 0; i<row; i++){
+				for(int j = 0; j<col; j++){
+					subtractResult[i][j] = first[i][j]+second[i][j];
+					System.out.print(subtractResult[i][j]+" ");
+				}
+			}
+		}
+		else {
+			System.out.println("These matrices cannot be subtracted because they are not the same size.");
+		}
+	}
+	private void matrixMultiply(double first[][], double second[][], 
+			int firstRow, int firstCol, int secondRow, int secondCol) 
+	{
+		if (firstCol == secondRow) //must be true to multiply matrices
+		{
+			double multiplyResult[][]=new double[firstRow][secondCol];
+		
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 3; j++) {
+					multiplyResult[i][j] = 0;
+					for (int k = 0; k < 3; k++) {
+						multiplyResult[i][j] += first[i][k] * second[k][j];
+					}
+					System.out.print(multiplyResult[i][j] + " ");
+				}
+				System.out.println();
+			}
+		}
+		else {
+			System.out.println("These matrices cannot be multiplied.");
+		}
+	}
 
 }
