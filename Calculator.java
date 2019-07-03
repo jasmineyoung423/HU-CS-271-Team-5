@@ -243,7 +243,7 @@ public class Calculator {
 	{
 		try
 		{
-			if(num % 1 != 0)
+			if(num % 1 != 0 || num <= 0)
 			{
 				throw new Exception();
 			}
