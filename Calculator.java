@@ -6,9 +6,7 @@ import java.util.Scanner;
  * @author Jasmine Young */
 public class Calculator {
 	
-	private double firstNum; // number on left of operator
-	private double secondNum; // number on right of operator
-	private double total; // total of all expressions (sets up functionality for multiple operator inputs)
+	private double total; // total of the  expressions
 	public static void main(String[] args)
 	{
 		new Calculator(); // create this object
@@ -27,8 +25,6 @@ public class Calculator {
 			switch(expr)
 			{
 			case "clear":
-				firstNum = 0;
-				secondNum = 0;
 				total = 0;
 				break;
 			case "exit":
@@ -49,75 +45,272 @@ public class Calculator {
 	private void parseExpression(String expr)
 	{
 		try {
-			if(expr.contains(" "))
+			if(expr.contains(" ")) //to make parsing easier
 			{
 				printUsage();
-			}
+			} 
 			else
 			{
-				int plusIndex = expr.indexOf('+'); // sets up functionality for multiple operator inputs
-				int minusIndex = expr.indexOf('-'); // sets up functionality for multiple operator inputs
-				int multiplyIndex = expr.indexOf('*');
-				int divideIndex = expr.indexOf('/');
-				if(plusIndex == 0)
+				boolean hasPlus = expr.contains("+"); // for single operator verification
+				boolean hasMinus = expr.contains("-"); // for single operator verification
+				boolean hasMult = expr.contains("*"); // for single operator verification
+				boolean hasDiv = expr.contains("/"); // for single operator verification
+				boolean hasExpo = expr.contains("^"); // for single operator verification
+				boolean hasFact = expr.contains("!"); // for single operator verification
+				int operatorCount = 0; // for single operator verification
+				
+				// single operator verification
+				if(hasPlus)
 				{
-					firstNum = total;
-					secondNum = Double.parseDouble(expr.substring(1));
-					add(firstNum, secondNum);
+					operatorCount++;
 				}
-				else if (minusIndex == 0)
+				if(hasMinus)
 				{
-					firstNum = total;
-					secondNum = Double.parseDouble(expr.substring(1));
-					subtract(firstNum, secondNum);
+					operatorCount++;
 				}
-				else if (multiplyIndex == 0)
+				if(hasMult)
 				{
-					firstNum = total;
-					secondNum = Double.parseDouble(expr.substring(1));
-					multiply(firstNum, secondNum);
+					operatorCount++;
 				}
-				else if (divideIndex == 0)
+				if(hasDiv)
 				{
-					firstNum = total;
-					secondNum = Double.parseDouble(expr.substring(1));
-					divide(firstNum, secondNum);
+					operatorCount++;
 				}
-				else if(minusIndex == -1 && multiplyIndex == -1 && divideIndex == -1)
+				if(hasExpo)
 				{
-					firstNum = Double.parseDouble(expr.substring(0, plusIndex));
-					secondNum = Double.parseDouble(expr.substring(plusIndex+1));
-					add(firstNum, secondNum);
+					operatorCount++;
 				}
-				else if (plusIndex == -1 && multiplyIndex == -1 && divideIndex == -1)
+				if(hasFact)
 				{
-					firstNum = Double.parseDouble(expr.substring(0, minusIndex));
-					secondNum = Double.parseDouble(expr.substring(minusIndex+1));
-					subtract(firstNum, secondNum);
+					operatorCount++;
 				}
-				else if (plusIndex == -1 && minusIndex == -1 && divideIndex == -1)
+				
+				if(operatorCount == 1)
 				{
-					firstNum = Double.parseDouble(expr.substring(0, multiplyIndex));
-					secondNum = Double.parseDouble(expr.substring(multiplyIndex+1));
-					multiply(firstNum, secondNum);
-				}
-				else if (plusIndex == -1 && minusIndex == -1 && multiplyIndex == -1)
-				{
-					firstNum = Double.parseDouble(expr.substring(0, divideIndex));
-					secondNum = Double.parseDouble(expr.substring(divideIndex+1));
-					divide(firstNum, secondNum);
-				}
+					double firstNum; // number on left of operator
+					double secondNum; // number on right of operator
+					double pi = Math.PI; // for ease, since it's referenced a lot
+					boolean hasPI = expr.contains("pi"); // expr is scanned in using toLower, so PI, pi, Pi, and pI will all be read in as pi
+					if(hasPlus)
+					{
+						int plusIndex = expr.indexOf('+');
+						if(plusIndex == 0)
+						{
+							firstNum = total;
+							if(hasPI)
+							{
+								secondNum = pi;
+							}
+							else
+							{
+								secondNum = Double.parseDouble(expr.substring(1));
+							}
+						}
+						else
+						{
+							if(hasPI)
+							{
+								if(expr.indexOf("p") == 0)
+								{
+									firstNum = pi;
+									secondNum = Double.parseDouble(expr.substring(plusIndex+1));
+								}
+								else
+								{
+									firstNum = Double.parseDouble(expr.substring(0, plusIndex));
+									secondNum = pi;
+								}
+							}
+							else
+							{
+								firstNum = Double.parseDouble(expr.substring(0, plusIndex));
+								secondNum = Double.parseDouble(expr.substring(plusIndex+1));
+							}
+						}
+						add(firstNum, secondNum);
+					}
+					else if (hasMinus)
+					{
+						int minusIndex = expr.indexOf('-');
+						if(minusIndex == 0)
+						{
+							firstNum = total;
+							if(hasPI)
+							{
+								secondNum = pi;
+							}
+							else
+							{
+								secondNum = Double.parseDouble(expr.substring(1));
+							}
+						}
+						else
+						{
+							if(hasPI)
+							{
+								if(expr.indexOf("p") == 0)
+								{
+									firstNum = pi;
+									secondNum = Double.parseDouble(expr.substring(minusIndex+1));
+								}
+								else
+								{
+									firstNum = Double.parseDouble(expr.substring(0, minusIndex));
+									secondNum = pi;
+								}
+							}
+							else
+							{
+								firstNum = Double.parseDouble(expr.substring(0, minusIndex));
+								secondNum = Double.parseDouble(expr.substring(minusIndex+1));
+							}
+						}
+						subtract(firstNum, secondNum);
+					}
+					else if(hasMult)
+					{
+						int multIndex = expr.indexOf('*');
+						if(multIndex == 0)
+						{
+							firstNum = total;
+							if(hasPI)
+							{
+								secondNum = pi;
+							}
+							else
+							{
+								secondNum = Double.parseDouble(expr.substring(1));
+							}
+						}
+						else
+						{
+							if(hasPI)
+							{
+								if(expr.indexOf("p") == 0)
+								{
+									firstNum = pi;
+									secondNum = Double.parseDouble(expr.substring(multIndex+1));
+								}
+								else
+								{
+									firstNum = Double.parseDouble(expr.substring(0, multIndex));
+									secondNum = pi;
+								}
+							}
+							else
+							{
+								firstNum = Double.parseDouble(expr.substring(0, multIndex));
+								secondNum = Double.parseDouble(expr.substring(multIndex+1));
+							}
+						}
+						multiply(firstNum, secondNum);
+					}
+					else if(hasDiv)
+					{
+						int divIndex = expr.indexOf('/');
+						if(divIndex == 0)
+						{
+							firstNum = total;
+							if(hasPI)
+							{
+								secondNum = pi;
+							}
+							else
+							{
+								secondNum = Double.parseDouble(expr.substring(1));
+							}
+						}
+						else
+						{
+							if(hasPI)
+							{
+								if(expr.indexOf("p") == 0)
+								{
+									firstNum = pi;
+									secondNum = Double.parseDouble(expr.substring(divIndex+1));
+								}
+								else
+								{
+									firstNum = Double.parseDouble(expr.substring(0, divIndex));
+									secondNum = pi;
+								}
+							}
+							else
+							{
+								firstNum = Double.parseDouble(expr.substring(0, divIndex));
+								secondNum = Double.parseDouble(expr.substring(divIndex+1));
+							}
+						}
+						divide(firstNum, secondNum);
+					}
+					else if(hasExpo)
+					{
+						int expoIndex = expr.indexOf('^');
+						if(expoIndex == 0)
+						{
+							firstNum = total;
+							if(hasPI)
+							{
+								secondNum = pi;
+							}
+							else
+							{
+								secondNum = Double.parseDouble(expr.substring(1));
+							}
+						}
+						else
+						{
+							if(hasPI)
+							{
+								if(expr.indexOf("p") == 0)
+								{
+									firstNum = pi;
+									secondNum = Double.parseDouble(expr.substring(expoIndex+1));
+								}
+								else
+								{
+									firstNum = Double.parseDouble(expr.substring(0, expoIndex));
+									secondNum = pi;
+								}
+							}
+							else
+							{
+								firstNum = Double.parseDouble(expr.substring(0, expoIndex));
+								secondNum = Double.parseDouble(expr.substring(expoIndex+1));
+							}
+						}
+						exponent(firstNum, secondNum);
+					}
+					else if(hasFact)
+					{
+						int factIndex = expr.indexOf('!');
+						if(factIndex == 0)
+						{
+							firstNum = total;
+						}
+						else
+						{
+							firstNum = Double.parseDouble(expr.substring(0, factIndex));
+						}
+						factorial(firstNum);
+					}
+					else
+					{
+						System.out.println("Something went wrong. Did not find any operators");
+					}
+					expr = "";
+					System.out.println("Enter a command. Enter menu for list of commands:");
+				} // operatorCount if 
 				else
 				{
-					System.out.println("Please input only one operator.");
+					System.out.println( "Please enter one and only one operator.");
+					printUsage();
 				}
-				expr = "";
-				System.out.println("Enter a command. Enter menu for list of commands:");
-			}
-		}
+			} // contains space else 
+		} // try
 		catch(NumberFormatException nfe)
 		{
-			System.out.println("Please enter digits, operators, and supported operations only.");
+			System.out.println( expr + " is not a valid expression. Please enter digits, operators, and supported operations only.");
 			printUsage();
 		}
 	}
@@ -130,7 +323,14 @@ public class Calculator {
 							"Current Operations Supported: \n" +
 							"exit: exit program \n" +
 							"clear: clear memory \n" +
-							"Enter a command. Enter menu for list of commands:"); // update with functionality
+							"addition: [digit]+[digit]  OR +[digit] to use previous answer as first digit \n" +
+							"subtraction: [digit]-[digit] OR -[digit] \n" +
+							"multiplication: [digit]*[digit] OR *[digit] \n" +
+							"division: [digit]/[digit] OR /[digit] \n" +
+							"exponential: [digit]^[digit] OR ^[digit] \n" +
+							"factorial: [digit]! OR ! \n" +
+							"PI: Input PI in place of [digit] in one of the above operations (does not work with factorial)\n" +
+							"Enter a command:"); // update with functionality
 	}
 
 	private void add(double first, double second)
@@ -144,7 +344,7 @@ public class Calculator {
 		total = (first - second);
 		System.out.println(total);
 	}
-	
+
 	private void multiply(double first, double second)
 	{
 		total = (first * second);
@@ -159,18 +359,39 @@ public class Calculator {
 
 	private void factorial(double num)
 	{
-		double numCount = num-1;
-		double tempTotal = num;
-		
-		while(numCount != 0)
+		try
 		{
-			tempTotal = (tempTotal * numCount);
+			if(num % 1 != 0 || num <= 0)
+			{
+				throw new Exception();
+			}
+			else
+			{
+				double tempTotal = num;
+				double numCount = num-1;
+				
+				while(numCount != 0)
+				{
+				tempTotal = (tempTotal * numCount);
 		
-			numCount--;
+				numCount--;
+				}
+			total = tempTotal;
+			System.out.println(total);
+			}
 		}
-		total = tempTotal;
+		catch(Exception e)
+		{
+			System.out.println("Factorial requires a positive whole number. Ex: 5!");
+		}
+	}
+	
+	private void exponent(double first, double second)
+	{
+		total = Math.pow(first, second);
 		System.out.println(total);
 	}
+
 	
 
 	/*
@@ -238,5 +459,6 @@ public class Calculator {
 			System.out.println("These matrices cannot be multiplied.");
 		}
 	}
+
 
 }
